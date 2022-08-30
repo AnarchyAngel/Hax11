@@ -1,6 +1,11 @@
 from Tkinter import *
 #from tkFileDialog import askopenfilename
-import Image, ImageTk, os, sys, time
+#import Image, ImageTk, os, sys, time
+import os, sys, time
+#import PIL.ImageTk
+from PIL import ImageTk, Image
+#import Image
+#ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 if __name__ == "__main__":
     root = Tk()
@@ -20,8 +25,8 @@ if __name__ == "__main__":
     frame.pack(fill=BOTH,expand=1)
     root.title("haX11")
     def getcordssend(event,txt,enter):
-	print (event.x,event.y)
-        print "text2: "+txt
+	print((event.x,event.y))
+        print("text2: "+txt)
 	senter = enter.get()
         global IP
         global canvas
@@ -31,8 +36,8 @@ if __name__ == "__main__":
         os.system('export DISPLAY='+IP+':0;xdotool mousemove '+str(event.x)+' '+str(event.y)+' click 1;xdotool --clearmodifiers type "'+txt+'"')
 	if senter == 1:
 		os.system('export DISPLAY='+IP+':0;xdotool key KP_Enter')
-		print "enter sent"
-	print "senter: "+str(senter)
+		print("enter sent")
+	print("senter: "+str(senter))
         time.sleep(2)
         os.system('xwd -root -screen -silent -display '+IP+':0 > output.xwd')
         os.system('convert output.xwd output.png')
@@ -42,14 +47,14 @@ if __name__ == "__main__":
         File = imgraw
         img = ImageTk.PhotoImage(Image.open(File))
         canvas.create_image(0,0,image=img,anchor="nw")
-        print "test"
+        print("test")
 	canvas.bind("<Button 1>",printcoords)
 
 
 
     def send(e,popup,senter):
 	#popup.destroy()
-	print senter.get()
+	print(senter.get())
 	txt = e.get()
 	canvas.bind("<Button 1>",lambda event: getcordssend(event,txt,senter))
 	popup.destroy()
@@ -152,13 +157,13 @@ if __name__ == "__main__":
         File = imgraw
         img = ImageTk.PhotoImage(Image.open(File))
         canvas.create_image(0,0,image=img,anchor="nw")
-	print 'xdotool mousemove '+str(x)+' '+str(y)+' click 1'
-	print "test"
+	print('xdotool mousemove '+str(x)+' '+str(y)+' click 1')
+	print("test")
 
     #function to be called when mouse is clicked
     def printcoords(event):
         #outputting x and y coords to console
-        print (event.x,event.y)
+        print((event.x,event.y))
         getclick(event.x,event.y)
     #mouseclick event
     canvas.bind("<Button 1>",printcoords)
