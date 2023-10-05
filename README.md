@@ -13,3 +13,16 @@ Another thought I was playing around with was a type of ransomeware attack where
 give you bitcoins. The idea is the victim will have no idea whats really going on and might assume they really are infected 
 with some of the ransomeware they see on TV. The scareware approach might work as well. Anyway that just a few ideas, but how 
 you use it is really up to you
+
+**UPDATE**
+ I have updated Hax11 to connect to non-default display ports. The previous version only allowed connecting to display 0 "port 6000", but now you can connect to any a system has available. 
+
+Example:
+
+If you want to connect to display 1 "port 6001" use this command:
+
+python hax11.py ip.addr.here 1
+If you want to connect to display 0 use the old command style:
+
+python hax11.py ip.addr.here
+You can connect to display 1, 2, 3, and so on. I know it seems like a small change, but it doubles or more your attack surface. So while the change is small, the impact is big. Enjoy! 
