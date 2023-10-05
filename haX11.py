@@ -29,17 +29,18 @@ if __name__ == "__main__":
         print("text2: "+txt)
 	senter = enter.get()
         global IP
+	global PORT
         global canvas
         global img
         canvas.create_text(100,100,fill="darkblue",font="Times 20 italic bold", text="loading....")
         canvas.update()
-        os.system('export DISPLAY='+IP+':0;xdotool mousemove '+str(event.x)+' '+str(event.y)+' click 1;xdotool --clearmodifiers type "'+txt+'"')
+        os.system('export DISPLAY='+IP+':'+PORT+';xdotool mousemove '+str(event.x)+' '+str(event.y)+' click 1;xdotool type "'+txt+'"')
 	if senter == 1:
-		os.system('export DISPLAY='+IP+':0;xdotool key KP_Enter')
+		os.system('export DISPLAY='+IP+':'+PORT+';xdotool key KP_Enter')
 		print("enter sent")
 	print("senter: "+str(senter))
         time.sleep(2)
-        os.system('xwd -root -screen -silent -display '+IP+':0 > output.xwd')
+        os.system('xwd -root -screen -silent -display '+IP+':'+PORT+' > output.xwd')
         os.system('convert output.xwd output.png')
         time.sleep(2)
         canvas.delete("all")
@@ -60,9 +61,9 @@ if __name__ == "__main__":
 	popup.destroy()
 
     def openPage(pop, url):
-        os.system('export DISPLAY='+IP+':0;firefox '+url.get()+' &')
+        os.system('export DISPLAY='+IP+':'+PORT+';firefox '+url.get()+' &')
         time.sleep(5)
-        os.system('export DISPLAY='+IP+':0;xdotool key F11')
+        os.system('export DISPLAY='+IP+':'+PORT+';xdotool key F11')
         pop.destroy()
 
     def getURL():
@@ -107,7 +108,7 @@ if __name__ == "__main__":
         global img
         canvas.create_text(100,100,fill="darkblue",font="Times 20 italic bold", text="refreshing....")
         canvas.update()
-        os.system('xwd -root -screen -silent -display '+IP+':0 > output.xwd')
+        os.system('xwd -root -screen -silent -display '+IP+':'+PORT+' > output.xwd')
         os.system('convert output.xwd output.png')
         canvas.delete("all")
         imgraw = "output.png"
@@ -116,7 +117,7 @@ if __name__ == "__main__":
         canvas.create_image(0,0,image=img,anchor="nw")
     def openxterm():
 	global IP
-	os.system('export DISPLAY='+IP+':0;xdotool key alt+F2')#;xdotool type xterm;xdotool key KP_Enter')
+	os.system('export DISPLAY='+IP+':'+PORT+';xdotool key alt+F2')#;xdotool type xterm;xdotool key KP_Enter')
 	ref()
 
     b = Button(root, text="Send Txt", command=sendtext)
@@ -132,7 +133,12 @@ if __name__ == "__main__":
 
     #adding the image
     IP = sys.argv[1]
-    os.system('xwd -root -screen -silent -display '+IP+':0 > output.xwd')
+    #PORT = sys.argv[2]
+    try:
+     PORT = sys.argv[2]
+    except:
+     PORT = str(0)
+    os.system('xwd -root -screen -silent -display '+IP+':'+PORT+' > output.xwd')
     os.system('convert output.xwd output.png')
     imgraw = "output.png"
     File = imgraw
@@ -146,10 +152,10 @@ if __name__ == "__main__":
 	global img
 	canvas.create_text(100,100,fill="darkblue",font="Times 20 italic bold", text="loading....")
 	canvas.update()
-	os.system('export DISPLAY='+IP+':0')
-	os.system('export DISPLAY='+IP+':0;xdotool mousemove '+str(x)+' '+str(y)+' click 1')
+	os.system('export DISPLAY='+IP+':'+PORT)
+	os.system('export DISPLAY='+IP+':'+PORT+';xdotool mousemove '+str(x)+' '+str(y)+' click 1')
         time.sleep(2)
-        os.system('xwd -root -screen -silent -display '+IP+':0 > output.xwd')
+        os.system('xwd -root -screen -silent -display '+IP+':'+PORT+' > output.xwd')
         os.system('convert output.xwd output.png')
         time.sleep(2)
 	canvas.delete("all")
